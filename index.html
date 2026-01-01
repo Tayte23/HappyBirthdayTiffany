@@ -32,7 +32,7 @@
         linear-gradient(to bottom, rgba(0,0,0,0.25), rgba(0,0,0,0.62)),
         url("https://raw.githubusercontent.com/Tayte23/HappyBirthdayTsitsi/main/FLOWERS.JPG") center/cover no-repeat fixed;
       color: var(--text);
-      overflow:hidden;
+      overflow:auto; /* allow phone to scroll if needed */
       position:relative;
     }
 
@@ -178,15 +178,7 @@
       text-shadow: 0 10px 25px rgba(0,0,0,0.25);
     }
 
-    .pulse-heart{
-      display:inline-block;
-      margin-left: 6px;
-      animation: pulse 1.6s ease-in-out infinite;
-      transform-origin:center;
-    }
-
-    @keyframes pulse{
-      0%{ transform: scale(1); filter: drop-shadow(0 0 0 rgba(229,57,53,0.0)); }
+    
       50%{ transform: scale(1.22); filter: drop-shadow(0 0 12px rgba(229,57,53,0.55)); }
       100%{ transform: scale(1); filter: drop-shadow(0 0 0 rgba(229,57,53,0.0)); }
     }
@@ -398,7 +390,25 @@
     .signature{ font-weight: 800; letter-spacing: 0.2px; }
 
     @media (max-width: 420px){
-      .stage{ width: min(420px, 94vw); }
+      .stage{ width: min(420px, 94vw); padding: 14px; }
+      .inner{
+        padding: 14px 14px 12px;
+        gap: 10px;
+        grid-template-rows: auto minmax(200px, 1fr) auto;
+      }
+      .title{ font-size: clamp(28px, 8vw, 40px); }
+      .subtitle{ font-size: 14.5px; }
+      /* IMPORTANT: smaller media block so the message is visible on phones */
+      .media{ min-height: 235px; }
+      .message{ font-size: 14.5px; padding: 10px 10px; }
+    }
+
+    /* Extra safety for short phone screens (Safari address bar etc.) */
+    @media (max-height: 740px){
+      .stage{ padding: 12px; }
+      .inner{ gap: 10px; padding: 14px 14px 12px; grid-template-rows: auto minmax(190px, 1fr) auto; }
+      .media{ min-height: 220px; }
+    }
       .media{ min-height: 290px; }
     }
   </style>
@@ -413,7 +423,7 @@
       <div class="inner">
         <div>
           <div class="badge">🎂 Born to Be Iconic <span class="clink">🥂</span></div>
-          <h1 class="title">Happy Birthday Tiffany <span class="pulse-heart">❤️</span></h1>
+          <h1 class="title">Happy Birthday Tiffany</h1>
           <p class="subtitle">A whole vibe. A whole blessing. A whole main character.<span class="sparkle" aria-hidden="true">✨</span></p>
         </div>
 
