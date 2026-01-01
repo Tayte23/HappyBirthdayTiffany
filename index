@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Happy Birthday Tiffany 🎉</title>
+  <style>
+    :root{
+      --red: #E53935;
+      --deep-red: #B71C1C;
+      --pink: #FF4D8D;
+      --rose: #FF7AAE;
+      --peach: #FFB07C;
+      --leaf: #2E7D32;
+
+      --glass: rgba(255,255,255,0.16);
+      --glass-2: rgba(255,255,255,0.10);
+      --text: #ffffff;
+      --muted: rgba(255,255,255,0.88);
+      --shadow: 0 18px 50px rgba(0,0,0,0.35);
+      --radius: 22px;
+    }
+
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+
+    /* Instagram-friendly stage */
+    body{
+      display:grid;
+      place-items:center;
+      background:
+        linear-gradient(to bottom, rgba(0,0,0,0.25), rgba(0,0,0,0.62)),
+        url("https://raw.githubusercontent.com/Tayte23/HappyBirthdayTsitsi/main/FLOWERS.JPG") center/cover no-repeat fixed;
+      color: var(--text);
+      overflow:hidden;
+      position:relative;
+    }
+
+    /* Soft colour wash for readability */
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      background:
+        radial-gradient(1000px 650px at 18% 12%, rgba(229,57,53,0.18), transparent 60%),
+        radial-gradient(900px 620px at 82% 14%, rgba(255,77,141,0.16), transparent 60%),
+        radial-gradient(850px 600px at 55% 78%, rgba(255,176,124,0.14), transparent 62%),
+        linear-gradient(to bottom, rgba(0,0,0,0.28), rgba(0,0,0,0.68));
+      z-index:0;
+    }
+
+    /* Subtle "automated" motion: slow background drift (Ken Burns-ish) */
+    body::after{
+      content:"";
+      position:fixed;
+      inset:-6%;
+      background:
+        radial-gradient(1400px 900px at 30% 20%, rgba(255,255,255,0.08), transparent 60%),
+        radial-gradient(1200px 800px at 70% 75%, rgba(255,77,141,0.06), transparent 62%);
+      z-index:1;
+      pointer-events:none;
+      animation: drift 14s ease-in-out infinite alternate;
+      mix-blend-mode: overlay;
+      opacity:0.8;
+    }
+
+    @keyframes drift{
+      0%{ transform: translate3d(-1.5%, -1.2%, 0) scale(1.02); }
+      100%{ transform: translate3d(1.5%, 1.2%, 0) scale(1.05); }
+    }
+
+    /* Floating petals (non-interactive) */
+    .petals{
+      position:fixed;
+      inset:0;
+      z-index:3;
+      pointer-events:none;
+      opacity:0.55;
+      filter: drop-shadow(0 8px 14px rgba(0,0,0,0.18));
+    }
+
+    .petal{
+      position:absolute;
+      width: var(--s, 12px);
+      height: calc(var(--s, 12px) * 0.72);
+      border-radius: 999px 999px 999px 999px;
+      background: var(--c, #fff);
+      left: var(--x, 50vw);
+      top: var(--y, -10vh);
+      transform: rotate(var(--rot, 0deg));
+      opacity: var(--o, 0.8);
+      animation: fall var(--d, 10s) linear infinite;
+      will-change: transform;
+    }
+
+    @keyframes fall{
+      from{ transform: translateY(-15vh) translateX(0px) rotate(0deg); }
+      to{ transform: translateY(115vh) translateX(var(--drift, 0px)) rotate(360deg); }
+    }
+
+    /* Stage (choose 1080x1350 for IG feed) */
+    .stage{
+      width: min(520px, 92vw);
+      aspect-ratio: 4 / 5; /* 1080x1350 */
+      position:relative;
+      z-index:4;
+      display:grid;
+      place-items:center;
+      padding: 18px;
+    }
+
+    .card{
+      width: 100%;
+      height: 100%;
+      border-radius: 26px;
+      background: linear-gradient(135deg, var(--glass), var(--glass-2));
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255,255,255,0.22);
+      overflow:hidden;
+      position:relative;
+    }
+
+    /* Subtle film grain for "social media" feel */
+    .grain{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      z-index:5;
+      opacity:0.08;
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+    }
+
+    .inner{
+      height:100%;
+      display:grid;
+      grid-template-rows: auto minmax(220px,1fr) auto;
+      padding: 18px 18px 16px;
+      gap: 12px;
+      position:relative;
+      z-index:4;
+    }
+
+    .badge{
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.25);
+      background: linear-gradient(135deg, rgba(229,57,53,0.22), rgba(255,77,141,0.16));
+      font-weight: 800;
+      letter-spacing: 0.2px;
+      width: fit-content;
+    }
+
+    .clink{
+      display:inline-block;
+      animation: clink 1.6s ease-in-out infinite;
+      transform-origin: center;
+    }
+
+    .clink.delay{
+      animation-delay: .8s;
+    }
+
+    @keyframes clink{
+      0%{ transform: rotate(0deg) scale(1); }
+      40%{ transform: rotate(-12deg) scale(1.15); }
+      60%{ transform: rotate(12deg) scale(1.15); }
+      100%{ transform: rotate(0deg) scale(1); }
+    }
+
+    .title{
+      margin: 6px 0 0;
+      font-size: clamp(30px, 4.4vw, 48px);
+      line-height: 1.05;
+      letter-spacing: -0.6px;
+      text-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    }
+
+    .pulse-heart{
+      display:inline-block;
+      margin-left: 6px;
+      animation: pulse 1.6s ease-in-out infinite;
+      transform-origin:center;
+    }
+
+    @keyframes pulse{
+      0%{ transform: scale(1); filter: drop-shadow(0 0 0 rgba(229,57,53,0.0)); }
+      50%{ transform: scale(1.22); filter: drop-shadow(0 0 12px rgba(229,57,53,0.55)); }
+      100%{ transform: scale(1); filter: drop-shadow(0 0 0 rgba(229,57,53,0.0)); }
+    }
+
+    .subtitle{
+      margin: 6px 0 0;
+      font-size: 15.5px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .sparkle{
+      display:inline-block;
+      margin-left: 6px;
+      color: #FFD97A;
+      text-shadow:
+        0 0 6px rgba(255, 215, 122, 0.45),
+        0 0 14px rgba(255, 215, 122, 0.35),
+        0 0 22px rgba(255, 215, 122, 0.25);
+      animation: sparkle-once 1.4s ease-out 1;
+      animation-fill-mode: both;
+      transform-origin: center;
+      filter: drop-shadow(0 0 0 rgba(255,215,122,0));
+    }
+
+    .diamond{
+      display:inline-block;
+      margin-left: 6px;
+      color: #E6E8EB; /* silver */
+      text-shadow:
+        0 0 6px rgba(230,232,235,0.6),
+        0 0 16px rgba(255,255,255,0.5),
+        0 0 28px rgba(200,210,220,0.4);
+      animation: diamond-sparkle 1.6s ease-out 1;
+      animation-fill-mode: both;
+      transform-origin: center;
+    }
+
+      display:inline-block;
+      margin-left: 6px;
+      color: #FFD97A; /* soft gold */
+      text-shadow:
+        0 0 6px rgba(255, 215, 122, 0.45),
+        0 0 14px rgba(255, 215, 122, 0.35),
+        0 0 22px rgba(255, 215, 122, 0.25);
+      animation: sparkle-once 1.4s ease-out 1;
+      animation-fill-mode: both;
+      transform-origin: center;
+      filter: drop-shadow(0 0 0 rgba(255,215,122,0));
+    }
+
+    @keyframes sparkle-once{
+      0%{
+        opacity: .7;
+        transform: scale(1);
+      }
+      40%{
+        opacity: 1;
+        transform: scale(1.3) rotate(8deg);
+      }
+      100%{
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes diamond-sparkle{
+      0%{
+        opacity: .6;
+        transform: scale(1) rotate(0deg);
+        filter: drop-shadow(0 0 0 rgba(255,255,255,0));
+      }
+      45%{
+        opacity: 1;
+        transform: scale(1.35) rotate(12deg);
+        filter: drop-shadow(0 0 22px rgba(255,255,255,0.85));
+      }
+      100%{
+        opacity: 1;
+        transform: scale(1);
+        filter: drop-shadow(0 0 8px rgba(230,232,235,0.45));
+      }
+    }
+      40%{
+        opacity: 1;
+        transform: scale(1.3) rotate(8deg);
+        filter: drop-shadow(0 0 18px rgba(255,215,122,0.85));
+      }
+      100%{
+        opacity: 1;
+        transform: scale(1);
+        filter: drop-shadow(0 0 6px rgba(255,215,122,0.35));
+      }
+    }
+      40%{ opacity: 1; transform: scale(1.25) rotate(8deg); filter: drop-shadow(0 0 12px rgba(255,255,255,0.6)); }
+      100%{ opacity: 1; transform: scale(1); filter: drop-shadow(0 0 0 rgba(255,255,255,0)); }
+    }
+
+    @keyframes sparkle{
+      0%{ opacity: .65; transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 0 rgba(255,255,255,0)); }
+      35%{ opacity: 1; transform: scale(1.28) rotate(12deg); filter: drop-shadow(0 0 10px rgba(255,255,255,0.55)); }
+      60%{ opacity: .9; transform: scale(1.12) rotate(-10deg); filter: drop-shadow(0 0 14px rgba(255,255,255,0.45)); }
+      100%{ opacity: .65; transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 0 rgba(255,255,255,0)); }
+    }
+
+    .media{
+      display:grid;
+      place-items:center;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,0.22);
+      background: rgba(0,0,0,0.14);
+      overflow:hidden;
+      position:relative;
+      min-height: 220px;
+    }
+
+    /* Photo or video gets a gentle slow zoom (automated) */
+    .media img,
+    .media video{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      opacity:0;
+      transition: opacity 1.2s ease;
+    }
+
+    .media .active{
+      opacity:1;
+      animation: kenburns 10s ease-in-out infinite alternate;
+    }
+
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      transform: scale(1.04);
+      animation: kenburns 10s ease-in-out infinite alternate;
+    }
+
+    @keyframes kenburns{
+      from{ transform: scale(1.03) translateY(-1.5%); }
+      to{ transform: scale(1.09) translateY(1.5%); }
+    }
+
+    /* Soft vignette */
+    .media::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: radial-gradient(70% 70% at 50% 35%, transparent 45%, rgba(0,0,0,0.30) 100%);
+      pointer-events:none;
+    }
+
+    .message{
+      margin: 0;
+      padding: 12px 12px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.22);
+      background: rgba(0,0,0,0.16);
+      line-height: 1.55;
+      color: rgba(255,255,255,0.92);
+      font-size: 15.5px;
+    }
+
+    .from{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap: 10px;
+      color: rgba(255,255,255,0.88);
+      font-size: 13.5px;
+    }
+
+    .signature{ font-weight: 800; letter-spacing: 0.2px; }
+
+    /* Tiny footer watermark (optional) */
+    .wm{
+      opacity:0.65;
+      font-size: 12px;
+    }
+
+    @media (max-width: 420px){
+      .stage{ width: min(420px, 94vw); }
+      .media{ min-height: 290px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- floating petals -->
+  <div class="petals" id="petals" aria-hidden="true"></div>
+
+  <div class="stage">
+    <section class="card">
+      <div class="grain" aria-hidden="true"></div>
+      <div class="inner">
+        <div>
+          <div class="badge">🎂 Born to Be Iconic <span class="clink">🥂</span></div>
+          <h1 class="title">Happy Birthday Tiffany <span class="pulse-heart">❤️</span></h1>
+          <p class="subtitle">A whole vibe. A whole blessing. A whole main character.<span class="sparkle" aria-hidden="true">✨</span></p>
+        </div>
+
+        <!-- MEDIA: AUTO SLIDESHOW (images + video, non-interactive) -->
+        <div class="media slideshow" id="slideshow">
+          <!-- Slide 1: Photo -->
+          <img class="slide active" src="TIFFANY_PHOTO_1_URL_HERE" alt="Tiffany photo 1" />
+          <!-- Slide 2: Photo -->
+          <img class="slide" src="TIFFANY_PHOTO_2_URL_HERE" alt="Tiffany photo 2" />
+          <!-- Slide 3: Video -->
+          <video class="slide" muted playsinline preload="auto" poster="TIFFANY_VIDEO_POSTER_URL_HERE">
+            <source src="TIFFANY_VIDEO_URL_HERE" type="video/mp4" />
+          </video>
+        </div>
+
+        <div>
+          <p class="message">
+            
+            I’m wishing you a year of big wins, soft life moments, and everything your heart has been praying for.
+            Keep glowing, keep growing, and keep being you. <span class="diamond" aria-hidden="true">💎</span>
+          </p>
+
+          <div class="from">
+            <div>
+              <div style="opacity:.8;">With love,</div>
+              <div class="signature">Tatenda</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+            </section>
+  </div>
+
+  <script>
+    // Non-interactive "automation": floating petals that loop forever
+    const petals = document.getElementById("petals");
+    const colors = ["#E53935", "#B71C1C", "#FF4D8D", "#FF7AAE", "#FFB07C", "#FFFFFF"];
+
+    function rand(min, max){ return Math.random() * (max - min) + min; }
+
+    function buildPetals(){
+      petals.innerHTML = "";
+      const COUNT = 28;
+      for(let i=0;i<COUNT;i++){
+        const p = document.createElement("div");
+        p.className = "petal";
+        const size = rand(10, 16);
+        p.style.setProperty("--s", size + "px");
+        p.style.setProperty("--x", rand(0, 100) + "vw");
+        p.style.setProperty("--y", rand(-60, 10) + "vh");
+        p.style.setProperty("--d", rand(9, 16) + "s");
+        p.style.setProperty("--o", rand(0.35, 0.85));
+        p.style.setProperty("--drift", rand(-50, 50) + "px");
+        p.style.setProperty("--rot", rand(-30, 30) + "deg");
+        p.style.setProperty("--c", colors[Math.floor(Math.random() * colors.length)]);
+        p.style.animationDelay = rand(0, 6) + "s";
+        petals.appendChild(p);
+      }
+    }
+
+    buildPetals();
+    window.addEventListener("resize", buildPetals);
+
+    // AUTO SLIDESHOW (Instagram-ready, non-interactive)
+    const slides = document.querySelectorAll(".slide");
+    let index = 0;
+
+    function showSlide(i){
+      slides.forEach((s, idx) =>{
+        s.classList.toggle("active", idx === i);
+        if(s.tagName === "VIDEO"){
+          idx === i ? s.play() : s.pause();
+        }
+      });
+    }
+
+    showSlide(index);
+
+    setInterval(()=>{
+      index = (index + 1) % slides.length;
+      showSlide(index);
+    }, 5000); // 5s per slide
+  </script>
+</body>
+</html>
