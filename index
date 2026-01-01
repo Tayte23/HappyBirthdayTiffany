@@ -49,7 +49,7 @@
       z-index:0;
     }
 
-    /* Subtle "automated" motion: slow background drift (Ken Burns-ish) */
+    /* Subtle "automated" motion: slow background drift */
     body::after{
       content:"";
       position:fixed;
@@ -83,7 +83,7 @@
       position:absolute;
       width: var(--s, 12px);
       height: calc(var(--s, 12px) * 0.72);
-      border-radius: 999px 999px 999px 999px;
+      border-radius: 999px;
       background: var(--c, #fff);
       left: var(--x, 50vw);
       top: var(--y, -10vh);
@@ -98,10 +98,10 @@
       to{ transform: translateY(115vh) translateX(var(--drift, 0px)) rotate(360deg); }
     }
 
-    /* Stage (choose 1080x1350 for IG feed) */
+    /* Stage (1080x1350 friendly) */
     .stage{
       width: min(520px, 92vw);
-      aspect-ratio: 4 / 5; /* 1080x1350 */
+      aspect-ratio: 4 / 5;
       position:relative;
       z-index:4;
       display:grid;
@@ -122,7 +122,7 @@
       position:relative;
     }
 
-    /* Subtle film grain for "social media" feel */
+    /* Subtle film grain */
     .grain{
       position:absolute;
       inset:0;
@@ -159,18 +159,14 @@
 
     .clink{
       display:inline-block;
-      animation: clink 1.6s ease-in-out infinite;
+      animation: clink 1.8s ease-in-out infinite;
       transform-origin: center;
-    }
-
-    .clink.delay{
-      animation-delay: .8s;
     }
 
     @keyframes clink{
       0%{ transform: rotate(0deg) scale(1); }
-      40%{ transform: rotate(-12deg) scale(1.15); }
-      60%{ transform: rotate(12deg) scale(1.15); }
+      40%{ transform: rotate(-10deg) scale(1.12); }
+      60%{ transform: rotate(10deg) scale(1.12); }
       100%{ transform: rotate(0deg) scale(1); }
     }
 
@@ -202,33 +198,8 @@
       line-height: 1.5;
     }
 
+    /* Accent sparkle at the end of the subtitle (soft gold) */
     .sparkle{
-      display:inline-block;
-      margin-left: 6px;
-      color: #FFD97A;
-      text-shadow:
-        0 0 6px rgba(255, 215, 122, 0.45),
-        0 0 14px rgba(255, 215, 122, 0.35),
-        0 0 22px rgba(255, 215, 122, 0.25);
-      animation: sparkle-once 1.4s ease-out 1;
-      animation-fill-mode: both;
-      transform-origin: center;
-      filter: drop-shadow(0 0 0 rgba(255,215,122,0));
-    }
-
-    .diamond{
-      display:inline-block;
-      margin-left: 6px;
-      color: #E6E8EB; /* silver */
-      text-shadow:
-        0 0 6px rgba(230,232,235,0.6),
-        0 0 16px rgba(255,255,255,0.5),
-        0 0 28px rgba(200,210,220,0.4);
-      animation: diamond-sparkle 1.6s ease-out 1;
-      animation-fill-mode: both;
-      transform-origin: center;
-    }
-
       display:inline-block;
       margin-left: 6px;
       color: #FFD97A; /* soft gold */
@@ -242,19 +213,27 @@
       filter: drop-shadow(0 0 0 rgba(255,215,122,0));
     }
 
+    .diamond{
+      display:inline-block;
+      margin-left: 6px;
+      color: #E6E8EB; /* sparkly silver */
+      text-shadow:
+        0 0 6px rgba(230,232,235,0.6),
+        0 0 16px rgba(255,255,255,0.55),
+        0 0 28px rgba(200,210,220,0.45);
+      transform-origin: center;
+    }
+
+    /* Re-triggered occasionally via JS */
+    .diamond.spark{
+      animation: diamond-sparkle 1.6s ease-out 1;
+      animation-fill-mode: both;
+    }
+
     @keyframes sparkle-once{
-      0%{
-        opacity: .7;
-        transform: scale(1);
-      }
-      40%{
-        opacity: 1;
-        transform: scale(1.3) rotate(8deg);
-      }
-      100%{
-        opacity: 1;
-        transform: scale(1);
-      }
+      0%{ opacity: .7; transform: scale(1); }
+      40%{ opacity: 1; transform: scale(1.3) rotate(8deg); }
+      100%{ opacity: 1; transform: scale(1); }
     }
 
     @keyframes diamond-sparkle{
@@ -274,29 +253,10 @@
         filter: drop-shadow(0 0 8px rgba(230,232,235,0.45));
       }
     }
-      40%{
-        opacity: 1;
-        transform: scale(1.3) rotate(8deg);
-        filter: drop-shadow(0 0 18px rgba(255,215,122,0.85));
-      }
-      100%{
-        opacity: 1;
-        transform: scale(1);
-        filter: drop-shadow(0 0 6px rgba(255,215,122,0.35));
-      }
-    }
-      40%{ opacity: 1; transform: scale(1.25) rotate(8deg); filter: drop-shadow(0 0 12px rgba(255,255,255,0.6)); }
-      100%{ opacity: 1; transform: scale(1); filter: drop-shadow(0 0 0 rgba(255,255,255,0)); }
-    }
-
-    @keyframes sparkle{
-      0%{ opacity: .65; transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 0 rgba(255,255,255,0)); }
-      35%{ opacity: 1; transform: scale(1.28) rotate(12deg); filter: drop-shadow(0 0 10px rgba(255,255,255,0.55)); }
-      60%{ opacity: .9; transform: scale(1.12) rotate(-10deg); filter: drop-shadow(0 0 14px rgba(255,255,255,0.45)); }
-      100%{ opacity: .65; transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 0 rgba(255,255,255,0)); }
-    }
 
     .media{
+      perspective: 1100px; /* classy 3D flip */
+
       display:grid;
       place-items:center;
       border-radius: 22px;
@@ -307,33 +267,47 @@
       min-height: 220px;
     }
 
-    /* Photo or video gets a gentle slow zoom (automated) */
-    .media img,
-    .media video{
+    /* Elegant "camera glint" overlay that plays on slide changes */
+    .glint{
       position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      object-fit: cover;
+      inset:-20%;
+      z-index:3;
+      pointer-events:none;
       opacity:0;
-      transition: opacity 1.2s ease;
+      background:
+        linear-gradient(115deg,
+          transparent 35%,
+          rgba(255,255,255,0.18) 45%,
+          rgba(255,255,255,0.55) 50%,
+          rgba(255,255,255,0.18) 55%,
+          transparent 65%);
+      filter: blur(0.2px);
+      transform: translateX(-35%) rotate(8deg);
     }
 
-    .media .active{
-      opacity:1;
-      animation: kenburns 10s ease-in-out infinite alternate;
+    .media.glint-on .glint{
+      animation: glintSweep 900ms ease-out 1;
     }
 
-      width:100%;
-      height:100%;
-      object-fit: cover;
-      transform: scale(1.04);
-      animation: kenburns 10s ease-in-out infinite alternate;
+    @keyframes glintSweep{
+      0%{ opacity:0; transform: translateX(-45%) rotate(8deg); }
+      20%{ opacity:.12; }
+      55%{ opacity:.22; }
+      100%{ opacity:0; transform: translateX(45%) rotate(8deg); }
     }
 
-    @keyframes kenburns{
-      from{ transform: scale(1.03) translateY(-1.5%); }
-      to{ transform: scale(1.09) translateY(1.5%); }
+    /* Blurred fill behind the contained photo, so it feels full and luxe */
+    .media::before{
+      content:"";
+      position:absolute;
+      inset:-10px;
+      background-image: var(--bg, none);
+      background-size: cover;
+      background-position: center;
+      filter: blur(18px) saturate(1.1);
+      opacity: 0.55;
+      transform: scale(1.08);
+      pointer-events:none;
     }
 
     /* Soft vignette */
@@ -343,6 +317,62 @@
       inset:0;
       background: radial-gradient(70% 70% at 50% 35%, transparent 45%, rgba(0,0,0,0.30) 100%);
       pointer-events:none;
+      z-index:2;
+    }
+
+    /* Slides */
+    .media img,
+    .media video{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit: contain; /* no cropping */
+      opacity:0;
+      transition: opacity 520ms ease;
+      will-change: transform, opacity, filter;
+      transform-style: preserve-3d;
+      /* per-slide direction set by JS */
+      --ry: 18deg;
+      --rx: 4deg;
+      z-index:1;
+    }
+
+    /* Active is visible */
+    .media .active{ opacity: 1; }
+
+    /* Elegant flip transitions */
+    .media .enter{
+      opacity: 1;
+      animation: flipIn 900ms cubic-bezier(.2,.85,.2,1) both;
+    }
+
+    .media .exit{
+      opacity: 1;
+      animation: flipOut 900ms cubic-bezier(.2,.85,.2,1) both;
+    }
+
+    /* Optional micro-zoom to keep it lively */
+    .media .active:not(.enter):not(.exit){
+      animation: microZoom 7.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes flipIn{
+      0%{ transform: translateY(10px) rotateY(var(--ry)) rotateX(var(--rx)) scale(0.985); filter: blur(2px) saturate(1.02); opacity: 0; }
+      55%{ transform: translateY(0) rotateY(calc(var(--ry) * -0.25)) rotateX(0deg) scale(1.01); filter: blur(0px) saturate(1.05); opacity: 1; }
+      100%{ transform: translateY(0) rotateY(0deg) rotateX(0deg) scale(1); filter: blur(0px) saturate(1); opacity: 1; }
+    }
+
+    @keyframes flipOut{
+      0%{ transform: translateY(0) rotateY(0deg) rotateX(0deg) scale(1); filter: blur(0px) saturate(1); opacity: 1; }
+      100%{ transform: translateY(-10px) rotateY(calc(var(--ry) * -1)) rotateX(calc(var(--rx) * -1)) scale(0.985); filter: blur(2px) saturate(1.02); opacity: 0; }
+    }
+
+    @keyframes microZoom{
+      from{ transform: scale(1.01) translateY(0px); }
+      to{ transform: scale(1.06) translateY(-2px); }
+    }
+      to{ transform: scale(1.06); }
     }
 
     .message{
@@ -367,12 +397,6 @@
 
     .signature{ font-weight: 800; letter-spacing: 0.2px; }
 
-    /* Tiny footer watermark (optional) */
-    .wm{
-      opacity:0.65;
-      font-size: 12px;
-    }
-
     @media (max-width: 420px){
       .stage{ width: min(420px, 94vw); }
       .media{ min-height: 290px; }
@@ -395,14 +419,12 @@
 
         <!-- MEDIA: AUTO SLIDESHOW (images + video, non-interactive) -->
         <div class="media slideshow" id="slideshow">
+          <div class="glint" aria-hidden="true"></div>
           <!-- Slide 1: Photo -->
-          <img class="slide active" src="TIFFANY_PHOTO_1_URL_HERE" alt="Tiffany photo 1" />
-          <!-- Slide 2: Photo -->
-          <img class="slide" src="TIFFANY_PHOTO_2_URL_HERE" alt="Tiffany photo 2" />
-          <!-- Slide 3: Video -->
-          <video class="slide" muted playsinline preload="auto" poster="TIFFANY_VIDEO_POSTER_URL_HERE">
-            <source src="TIFFANY_VIDEO_URL_HERE" type="video/mp4" />
-          </video>
+          <img class="slide active" src="https://raw.githubusercontent.com/Tayte23/HappyBirthdayTiffany/c3ca23ccf78f288cd649a3495d41812247dbd67f/tidd1.jpeg" alt="Tiffany iconic pose" />
+          <img class="slide" src="https://raw.githubusercontent.com/Tayte23/HappyBirthdayTiffany/c3ca23ccf78f288cd649a3495d41812247dbd67f/tiff2.jpeg" alt="Tiffany attitude pose" />
+          <img class="slide" src="https://raw.githubusercontent.com/Tayte23/HappyBirthdayTiffany/c3ca23ccf78f288cd649a3495d41812247dbd67f/tiff3.jpeg" alt="Tiffany soft pose" />
+          <img class="slide" src="https://raw.githubusercontent.com/Tayte23/HappyBirthdayTiffany/c3ca23ccf78f288cd649a3495d41812247dbd67f/tiff4.jpeg" alt="Tiffany celebration pose" />
         </div>
 
         <div>
@@ -415,7 +437,7 @@
           <div class="from">
             <div>
               <div style="opacity:.8;">With love,</div>
-              <div class="signature">Tatenda</div>
+              <div class="signature">Tee</div>
             </div>
           </div>
         </div>
@@ -427,7 +449,7 @@
   <script>
     // Non-interactive "automation": floating petals that loop forever
     const petals = document.getElementById("petals");
-    const colors = ["#E53935", "#B71C1C", "#FF4D8D", "#FF7AAE", "#FFB07C", "#FFFFFF"];
+    const colors = ["#E53935", "#B71C1C", "#FF4D8D", "#FF7AAE", "#FFB07C", "#FFFFFF"]; 
 
     function rand(min, max){ return Math.random() * (max - min) + min; }
 
@@ -454,25 +476,92 @@
     buildPetals();
     window.addEventListener("resize", buildPetals);
 
-    // AUTO SLIDESHOW (Instagram-ready, non-interactive)
-    const slides = document.querySelectorAll(".slide");
+    // AUTO SLIDESHOW (classy + elegant flip transitions)
+    const slideshowEl = document.getElementById("slideshow");
+    const slides = Array.from(document.querySelectorAll(".slide"));
     let index = 0;
 
-    function showSlide(i){
-      slides.forEach((s, idx) =>{
-        s.classList.toggle("active", idx === i);
-        if(s.tagName === "VIDEO"){
-          idx === i ? s.play() : s.pause();
-        }
-      });
+    function setMediaBgFromSlide(el){
+      const src = el?.currentSrc || el?.src;
+      if(src){
+        slideshowEl.style.setProperty("--bg", `url('${src}')`);
+      }
     }
 
-    showSlide(index);
+    let flipDir = 1; // alternates direction for a classy "editorial" feel
 
+    function showSlide(nextIndex){
+      const current = slides[index];
+      const next = slides[nextIndex];
+
+      if(current === next) return;
+
+      // alternate flip direction per slide
+      flipDir *= -1;
+      const ry = (18 * flipDir) + "deg";
+      const rx = (4 * (flipDir * -1)) + "deg";
+
+      // outgoing
+      current.style.setProperty('--ry', ry);
+      current.style.setProperty('--rx', rx);
+      current.classList.remove("enter");
+      current.classList.add("exit");
+      current.classList.remove("active");
+
+      // incoming
+      next.style.setProperty('--ry', ry);
+      next.style.setProperty('--rx', rx);
+      next.classList.remove("exit");
+      next.classList.add("active", "enter");
+      setMediaBgFromSlide(next);
+
+      // a subtle "camera glint" on each change (very IG)
+      slideshowEl.classList.remove('glint-on');
+      void slideshowEl.offsetWidth;
+      slideshowEl.classList.add('glint-on');
+      window.setTimeout(()=> slideshowEl.classList.remove('glint-on'), 950);
+
+      // cleanup after animation
+      window.setTimeout(() => {
+        current.classList.remove("exit");
+        next.classList.remove("enter");
+      }, 950);
+
+      index = nextIndex;
+    }
+
+    // init
+    slides.forEach(s => s.classList.remove("exit","enter"));
+    slides[0].classList.add("active");
+    setMediaBgFromSlide(slides[0]);
+
+    const SLIDE_MS = 4200; // a bit snappier + more fun
     setInterval(()=>{
-      index = (index + 1) % slides.length;
-      showSlide(index);
-    }, 5000); // 5s per slide
+      const next = (index + 1) % slides.length;
+      showSlide(next);
+    }, SLIDE_MS);
+
+    // Diamond sparkle — occasionally (randomized so it feels organic)
+    const diamond = document.querySelector('.diamond');
+    function sparkleDiamondOnce(){
+      if(!diamond) return;
+      diamond.classList.remove('spark');
+      // force reflow so animation reliably restarts
+      void diamond.offsetWidth;
+      diamond.classList.add('spark');
+      window.setTimeout(() => diamond.classList.remove('spark'), 1650);
+    }
+
+    function scheduleDiamondSparkle(){
+      const nextIn = Math.floor(rand(9000, 14000)); // 9–14s
+      window.setTimeout(() => {
+        sparkleDiamondOnce();
+        scheduleDiamondSparkle();
+      }, nextIn);
+    }
+
+    // start with a gentle delay
+    window.setTimeout(scheduleDiamondSparkle, 2800);
   </script>
 </body>
 </html>
